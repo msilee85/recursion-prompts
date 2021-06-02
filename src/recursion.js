@@ -171,18 +171,31 @@ var powerOfTwo = function(n) {
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
   var result = [];
-  if (string.length === 0) {
-    result.push(string);
-  } else {
-    result.push(string[string[0]]);
-    result.concat(reverse(string.slice(0, string.length - 1)));
-  }
-  return result.join(' ');
 
+  if (string.length === 0) {
+    return result;
+  } else {
+    result.push(string[string.length-1])
+    var shorten = string.slice(0, string.length-1);
+    var array = result.concat(reverse(shorten));
+    return array.join('');
+  }
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  var isPalindrome = false;
+  var uppercase = string.toUpperCase();
+  if (uppercase[0] !== uppercase[uppercase.length-1]) {
+    return isPalindrome;
+  }
+
+  if (uppercase.length === 1) {
+    isPalindrome = true;
+    return isPalindrome;
+  } else {
+    return palindrome(uppercase.slice(1, uppercase.length-1));
+  }
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -264,6 +277,19 @@ var countKeysInObj = function(obj, key) {
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
 var countValuesInObj = function(obj, value) {
+  var sum = 0;
+  for (var keys in obj) {
+    if (obj[keys] === value) {
+      sum += 1
+
+    } else {
+      if (typeof(obj[keys]) === 'object') {
+        return sum += countValuesInObj(keys, value);
+      }
+    }
+  }
+  return sum;
+
 };
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
